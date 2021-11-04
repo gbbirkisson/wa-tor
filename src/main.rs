@@ -228,9 +228,13 @@ fn print_world(
     world_height: usize,
     stats: &mut Stats,
 ) -> usize {
+    // Clear terminal and move cursor to top left
     print!("\x1B[2J\x1B[1;1H");
+
     let mut fish: usize = 0;
     let mut sharks: usize = 0;
+
+    // Draw Cells
     for (i, cell) in world.iter().enumerate() {
         let symbol = match cell {
             Cell::Empty => "  ",
@@ -241,7 +245,7 @@ fn print_world(
             Cell::Shark(attr) => {
                 sharks += 1;
                 match attr.lived_chronons {
-                    a if a > 50 => "🐙",
+                    a if a > 50 => "🐙", // For fun, distinguish really old sharks
                     _ => "🐠",
                 }
             }
@@ -253,6 +257,7 @@ fn print_world(
         }
     }
 
+    // Update stats
     if fish > stats.max_fish {
         stats.max_fish = fish;
     }
